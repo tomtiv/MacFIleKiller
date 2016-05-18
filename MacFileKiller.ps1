@@ -15,19 +15,20 @@ $NetworkDrives = gwmi Win32_LogicalDisk -filter "DriveType=4"
 foreach ($disk in $NetworkDrives)
 {
 	" "
-#	if($disk.DeviceID -eq "X:")
-#	{
-#		"Skipping " + $disk.DeviceID
-#	}
-#	else
-#	{
+#   Example of skipping a drive you don't want to 	
+	if($disk.DeviceID -eq "X:")
+	{
+		"Skipping " + $disk.DeviceID
+	}
+	else
+	{
 		"--------------------------"
 		"Processing " + $disk.DeviceID
 		cd -LiteralPath $disk.DeviceID
 		dir * -include "._*", ".DS_*" -Recurse -Force | Remove-Item -Force
 		"Done With " + $disk.DeviceID
 		"--------------------------"		
-#	}
+	}
 	" "
 }
 "--------------------------"
